@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/DesignPattern" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/TheGoProgrammingLaguageExamples" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gopl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/leetcode" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/studyGo" vcs="Git" />
+  </component>
+</project>
