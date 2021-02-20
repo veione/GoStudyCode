@@ -1,19 +1,7 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-)
+import "github.com/astaxie/beego"
 
-type st struct {
-	arr []int
-	name string
-}
-
-func main()  {
-	//s := &st{
-	//}
-	//fmt.Println(len(s.arr))
-	var t uint64 = 11223
-	fmt.Println(strconv.FormatUint(t, 10))
+func main() {
+	beego.Run()
 }
