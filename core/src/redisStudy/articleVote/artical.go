@@ -42,5 +42,5 @@ func articlePost(conn *redis.Client, userId, title, link string) string{
 }
 
 func getArticles(conn *redis.Client, page int, order string){
-
+	article
 }
