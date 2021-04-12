@@ -196,44 +196,36 @@ func checkLoginWaitLevel(dev string) (int, int) {
 // 清除排队队列中过期的成员,暂定清除1分钟之前的
 
 func logLoginQueueSizeTimer() {
-	if ServerInstance().processIdx == 1 {
-		loginQueueLength := getLoginQueueLength()
-		if loginQueueLength > 0 {
-			log.Printf("[login] 当前排队队列长度:%v", loginQueueLength)
-		}
+	loginQueueLength := getLoginQueueLength()
+	if loginQueueLength > 0 {
+		log.Printf("[login] 当前排队队列长度:%v", loginQueueLength)
 	}
 }
 
 func clearLoginQueueTimeoutMemberTimer() {
-	if ServerInstance().processIdx == 1 {
-		clearLoginQueueTimeoutMember(60 * 60)
-	}
+	clearLoginQueueTimeoutMember(60 * 60)
 }
 
 func clearLoginQueueTimeoutMember(timeout int64) {
+	var (
+		minValue string
+		maxValue string
+	)
 
-	if ServerInstance().processIdx == 1 {
-
-		var (
-			minValue string
-			maxValue string
-		)
-
-		if timeout == 0 {
-			minValue = "0"
-			curLoginQueueScore := genLoginQueueScore()
-			maxValue = fmt.Sprintf("%v", curLoginQueueScore)
-		} else {
-			curLoginQueueScore := genLoginQueueScore()
-			timeoutScore := curLoginQueueScore - timeout
-			if timeoutScore < 0 {
-				return
-			}
-			minValue = "0"
-			maxValue = fmt.Sprintf("%v", timeoutScore)
+	if timeout == 0 {
+		minValue = "0"
+		curLoginQueueScore := genLoginQueueScore()
+		maxValue = fmt.Sprintf("%v", curLoginQueueScore)
+	} else {
+		curLoginQueueScore := genLoginQueueScore()
+		timeoutScore := curLoginQueueScore - timeout
+		if timeoutScore < 0 {
+			return
 		}
-
-		loginQueueKeyName := getLoginQueueKeyName()
-		logicredis.RateLimitRedis().ZRemRangeByScore(loginQueueKeyName, minValue, maxValue)
+		minValue = "0"
+		maxValue = fmt.Sprintf("%v", timeoutScore)
 	}
+
+	loginQueueKeyName := getLoginQueueKeyName()
+	logicredis.RateLimitRedis().ZRemRangeByScore(loginQueueKeyName, minValue, maxValue)
 }
