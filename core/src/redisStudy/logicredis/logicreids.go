@@ -3,11 +3,19 @@ package logicredis
 import (
 	"github.com/go-redis/redis"
 	"log"
+	"sync"
 )
 
-var redisClient *redis.Client
+var (
+	redisClient *redis.Client
+	once sync.Once
+	url = "redis://81.68.166.65:6379"
+	db = 2
+	poolSize = 10
+)
 
-func NewRedisClient(url string, db, poolSize int) (*redis.Client, error){
+
+func NewRedisClient(url string, db, poolSize int) (*redis.Client, error) {
 	opt, err := redis.ParseURL(url)
 
 	if poolSize > 0 {
@@ -34,6 +42,13 @@ func NewRedisClient(url string, db, poolSize int) (*redis.Client, error){
 }
 
 func GetRedisClient() *redis.Client{
+	once.Do(func() {
+		var error error
+		redisClient, error = NewRedisClient(url, db, poolSize)
+		if error != nil{
+			log.Println(error.Error())
+		}
+	})
 	return redisClient
 }
 

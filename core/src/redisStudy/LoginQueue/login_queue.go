@@ -1,11 +1,11 @@
-package LoginQueue
+package main
 
 import (
 	"fmt"
 	"github.com/go-redis/redis"
 	"log"
-	"logic/logicredis"
 	"math"
+	"redisstudy/logicredis"
 	"time"
 )
 
@@ -18,7 +18,7 @@ const (
 
 // 排队队列的键名
 func getLoginQueueKeyName() string {
-	return "LoginQueue"
+	return "ChatQueue"
 }
 
 func getLoginWindowKeyName(rankTime int64) string {
@@ -36,13 +36,13 @@ func getNLoginTimeSlice() int64 {
 
 // 排队队列的长度
 func getLoginQueueLength() int64 {
-	return logicredis.RateLimitRedis().ZCard(getLoginQueueKeyName()).Val()
+	return logicredis.GetRedisClient().ZCard(getLoginQueueKeyName()).Val()
 }
 
 // 返回指定id的排名,分数
 func getLoginQueueRank(dev string) (int64, bool) {
 	loginQueueKeyName := getLoginQueueKeyName()
-	ret1 := logicredis.RateLimitRedis().ZRank(loginQueueKeyName, dev)
+	ret1 := logicredis.GetRedisClient().ZRank(loginQueueKeyName, dev)
 	if ret1.Err() != nil {
 		return 0, false
 	}
@@ -64,9 +64,9 @@ func loginQueueEnqueue(dev string) int64 {
 		Member: dev,
 	}
 	loginQueueKeyName := getLoginQueueKeyName()
-	logicredis.RateLimitRedis().ZAdd(loginQueueKeyName, member)
+	logicredis.GetRedisClient().ZAdd(loginQueueKeyName, member)
 
-	ret := logicredis.RateLimitRedis().ZRank(loginQueueKeyName, dev)
+	ret := logicredis.GetRedisClient().ZRank(loginQueueKeyName, dev)
 	if ret.Err() != nil && ret.Err() != redis.Nil {
 		log.Println("[redis] loginQueueEnqueue error:%v", ret.Err())
 		return math.MaxInt64
@@ -80,13 +80,13 @@ func loginQueueEnqueue(dev string) int64 {
 // 退出排队队列
 func loginQueueDequeue(dev string) {
 	loginQueueKeyName := getLoginQueueKeyName()
-	logicredis.RateLimitRedis().ZRem(loginQueueKeyName, dev)
+	logicredis.GetRedisClient().ZRem(loginQueueKeyName, dev)
 }
 
 // 获取当前
 func getLoginWindowSize(rankTime int64) int64 {
 	windowKey := getLoginWindowKeyName(rankTime)
-	windowSize, err := logicredis.RateLimitRedis().Get(windowKey).Int64()
+	windowSize, err := logicredis.GetRedisClient().Get(windowKey).Int64()
 	if err != nil && err != redis.Nil {
 		log.Println("getLoginWindowSize error:%v", err)
 		return 0
@@ -106,7 +106,7 @@ func getLoginWindowSize(rankTime int64) int64 {
 // 占用一个登录窗口席位
 func occupyingALoginWindowSeat(rankTime int64) bool {
 	windowKey := getLoginWindowKeyName(rankTime)
-	curValue := logicredis.RateLimitRedis().Incr(windowKey)
+	curValue := logicredis.GetRedisClient().Incr(windowKey)
 
 	if curValue.Err() != nil {
 		log.Println("occupyingALoginWindowSeat error:%v", curValue.Err())
@@ -118,7 +118,7 @@ func occupyingALoginWindowSeat(rankTime int64) bool {
 		cfgTimeSlice = 60
 	}
 
-	logicredis.RateLimitRedis().Expire(windowKey, time.Duration(2*cfgTimeSlice)*time.Second)
+	logicredis.GetRedisClient().Expire(windowKey, time.Duration(2*cfgTimeSlice)*time.Second)
 
 	cfgLoginWindowSize := int64(LoginWindowSize)
 
@@ -183,12 +183,7 @@ func checkLoginWaitLevel(dev string) (int, int) {
 	cfgLoginRetryRatio := LoginRetryRatio
 
 	waitTime := int(math.Ceil(cfgLoginRetryRatio * waitRatio))
-
-	// waitTime := int(math.Ceil(cfgLoginRetryRatio * waitRatio * waitRatio))
-
-	// if waitLevel == 0 {
-	// 	logger.Debugf("[login] curRank:%v loginWindowSize:%v waitLevel:%v curTime:%v nowTime:%v", curRank, loginWindowSize, waitLevel, rankTime, time.Now())
-	// }
+	
 	return waitLevel, waitTime
 }
 
@@ -227,5 +222,5 @@ func clearLoginQueueTimeoutMember(timeout int64) {
 	}
 
 	loginQueueKeyName := getLoginQueueKeyName()
-	logicredis.RateLimitRedis().ZRemRangeByScore(loginQueueKeyName, minValue, maxValue)
+	logicredis.GetRedisClient().ZRemRangeByScore(loginQueueKeyName, minValue, maxValue)
 }
