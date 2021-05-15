@@ -18,7 +18,7 @@ const (
 
 // 排队队列的键名
 func getLoginQueueKeyName() string {
-	return "ChatQueue"
+	return "LoginQueue"
 }
 
 func getLoginWindowKeyName(rankTime int64) string {
@@ -50,7 +50,7 @@ func getLoginQueueRank(dev string) (int64, bool) {
 }
 
 // 生成排队分数(类似于排队取号,生成的值就是取的排队号)
-// 当前以毫秒级的时间戳作为排队号
+// 当前以秒级的时间戳作为排队号
 func genLoginQueueScore() int64 {
 	return time.Now().Unix()
 }
@@ -188,7 +188,6 @@ func checkLoginWaitLevel(dev string) (int, int) {
 }
 
 //////////////////login进程有一个master进程负责发放登录名额和清除过期排队数据//////////////////////////////////////
-// 清除排队队列中过期的成员,暂定清除1分钟之前的
 
 func logLoginQueueSizeTimer() {
 	loginQueueLength := getLoginQueueLength()
@@ -197,8 +196,9 @@ func logLoginQueueSizeTimer() {
 	}
 }
 
+// 清除排队队列中过期的成员,暂定清除1分钟之前的
 func clearLoginQueueTimeoutMemberTimer() {
-	clearLoginQueueTimeoutMember(60 * 60)
+	clearLoginQueueTimeoutMember(60)
 }
 
 func clearLoginQueueTimeoutMember(timeout int64) {
