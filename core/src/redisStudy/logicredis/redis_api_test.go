@@ -7,11 +7,14 @@ import (
 )
 
 func TestCmdGet(t *testing.T) {
-	info := GetRedisClient().Get("tybfz2pj")
+	info := GetRedisClient().Get("wtqt")
    if info.Err() != nil && info.Err() == redis.Nil {
 	   println("没有该键", info.Err().Error())
    }
-   println("成功 ",info.Val())
+   fmt.Printf("成功 value:%v \n ",info.Val())
+	if info.Val() == "1"{
+		fmt.Printf("字符串为空")
+	}
 }
 
 func TestCmdSetNx(t *testing.T) {
@@ -20,4 +23,9 @@ func TestCmdSetNx(t *testing.T) {
 		fmt.Println(info.Err().Error())
 	}
 	fmt.Println("值", info.Val())
+}
+
+func TestCmdSet(t *testing.T) {
+	GetRedisClient().Set("wtqt", "1", 0)
+
 }
