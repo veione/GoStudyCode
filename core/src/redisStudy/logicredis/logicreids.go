@@ -41,14 +41,16 @@ func NewRedisClient(url string, db, poolSize int) (*redis.Client, error) {
 	return redisClient, nil
 }
 
-func GetRedisClient() *redis.Client{
+func GetRedisClient() *redis.Client {
 	once.Do(func() {
 		var error error
 		redisClient, error = NewRedisClient(url, db, poolSize)
-		if error != nil{
+		if error != nil {
 			log.Println(error.Error())
 		}
 	})
+}
+func RedisClient() *redis.Client{
 	return redisClient
 }
 
