@@ -22,6 +22,9 @@ func TestCmdSetNx(t *testing.T) {
 	if info.Err() != nil {
 		fmt.Println(info.Err().Error())
 	}
+	if info.Val() {
+		fmt.Printf("setNX成功 val:%v", info.Val())
+	}
 	fmt.Println("值", info.Val())
 }
 
