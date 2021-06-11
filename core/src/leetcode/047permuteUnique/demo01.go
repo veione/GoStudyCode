@@ -4,6 +4,20 @@ import (
 	"fmt"
 )
 
+type set map[int]struct{}
+
+func (s set) append(key int) {
+	s[key] = struct{}{}
+}
+
+func (s set) remove(key int) {
+	delete(s, key)
+}
+
+func (s set) exit(key int) bool {
+	_, ok := s[key]
+	return ok
+}
 
 func permute(nums []int) [][]int {
 	ans := [][]int{}
@@ -17,10 +31,13 @@ func permute(nums []int) [][]int {
 			ans = append(ans, temp)
 			return
 		}
+		// 使用set 剪枝
+		s := set{}
 		for i, val := range nums {
-			if visited[i] == false {
+			if visited[i] == false && !s.exit(val) {
 				visited[i] = true
 				curPermute = append(curPermute, val)
+				s.append(val)
 				backTrace(curPermute, visited)
 				visited[i] = false
 				curPermute = curPermute[:len(curPermute)-1]
