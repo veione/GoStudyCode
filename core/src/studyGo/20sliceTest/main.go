@@ -15,27 +15,10 @@ func getA()*st {
 
 
 func main(){
-	/*s := make([]int,0,10)
-	fmt.Println( s,len(s),cap(s))
-	s = append(s, 1,2,3)
-	fmt.Println(s, len(s),cap(s))*/
-
-	//s := &st{
-	//	a: 1,
-	//}
-	//
-	//fmt.Println(s)
-	//s.a = 2
-	//fmt.Println(s)
-
-	for i :=1 ; i<=3; i++ {
-		list = append(list, st{a :i })
-	}
-
-	fmt.Println(list)
-	s := getA()
-	s.a = 10
-	fmt.Println(list)
+	array := []int{10, 20, 30, 40}
+	slice := make([]int, 6)
+	n := copy(slice, array)
+	fmt.Println(n,slice)
 
 }
 
