@@ -49,7 +49,9 @@ func GetRedisClient() *redis.Client {
 			log.Println(error.Error())
 		}
 	})
+	return redisClient
 }
+
 func RedisClient() *redis.Client{
 	return redisClient
 }
