@@ -1,8 +1,8 @@
 package main
 
 import (
-	"expvar"
 	"fmt"
+	"io"
 	"time"
 )
 
@@ -33,13 +33,14 @@ func (rt Router) getFunc(name string) func() {
 
 
 func(rt Router) loop() {
-	tk := time.NewTicker(1*time.Second)
+	ticker := time.NewTicker(1*time.Second)
 	defer func() {
 		err := recover()
 		if err != nil {
 			fmt.Printf("loop错误: %v", err)
+			go rt.loop()
 		}
-		close(tk.C)
+		ticker.Stop()
 	}()
 	for {
 		select {
@@ -67,5 +68,12 @@ func main() {
 
 	go router.loop()
 
-
+	var str string
+	for {
+		_, err := fmt.Scan(&str)
+		if err == io.EOF {
+			break
+		}
+		router.nameChan <- str
+	}
 }
