@@ -37,7 +37,7 @@ func threeSum(nums []int) [][]int {
 }
 
 func main()  {
-	var nums = []int {-1,0,1,2,-1,-4,-2,-3,3,0,4}
+	var nums = []int {-1,0,1,2,-1,-4}
 	ans := threeSum(nums)
 	for i:= 0; i < len(ans); i++ {
 		for j:= 0; j< len(ans[i]); j++ {
