@@ -8,12 +8,12 @@ import (
 
 var (
 	redisClient *redis.Client
-	once sync.Once
-	url = "redis://81.68.166.65:6379"
-	db = 2
+	once        sync.Once
+	//url         = "redis://81.68.166.65:6379"
+	url      = "redis://175.97.169.134:6379"
+	db       = 2
 	poolSize = 10
 )
-
 
 func NewRedisClient(url string, db, poolSize int) (*redis.Client, error) {
 	opt, err := redis.ParseURL(url)
@@ -52,7 +52,6 @@ func GetRedisClient() *redis.Client {
 	return redisClient
 }
 
-func RedisClient() *redis.Client{
+func RedisClient() *redis.Client {
 	return redisClient
 }
-

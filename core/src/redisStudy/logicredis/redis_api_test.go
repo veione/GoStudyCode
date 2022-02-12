@@ -8,11 +8,11 @@ import (
 
 func TestCmdGet(t *testing.T) {
 	info := GetRedisClient().Get("wtqt")
-   if info.Err() != nil && info.Err() == redis.Nil {
-	   println("没有该键", info.Err().Error())
-   }
-   fmt.Printf("成功 value:%v \n ",info.Val())
-	if info.Val() == "1"{
+	if info.Err() != nil && info.Err() == redis.Nil {
+		println("没有该键", info.Err().Error())
+	}
+	fmt.Printf("成功 value:%v \n ", info.Val())
+	if info.Val() == "1" {
 		fmt.Printf("字符串为空")
 	}
 }
