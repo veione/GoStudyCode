@@ -1,1 +1,3 @@
-/core/pkg
+.idea
+.vscode
+core/pkg/mod
