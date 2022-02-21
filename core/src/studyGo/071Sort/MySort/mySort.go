@@ -1,6 +1,8 @@
 package MySort
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func BubbleSort(nums []int) {
 	n := len(nums)
@@ -27,7 +29,7 @@ func SelectSort(nums []int) {
 	}
 }
 
-// 划分
+// 划分1 默认是 以最左边的元素 为基准进行划分
 func Partition(nums []int, first, end int) int {
 	i, j := first, end
 	for i < j {
@@ -49,11 +51,38 @@ func Partition(nums []int, first, end int) int {
 	return i
 }
 
+func Partition2(nums []int, left, right int) int {
+	l, r := left, right
+	t := l
+	for l < r {
+		for l < r && nums[r] >= nums[t] {
+			r--
+		}
+		for l < r && nums[l] <= nums[t] {
+			l++
+		}
+		if l < r {
+			nums[l], nums[r] = nums[r], nums[l]
+		}
+	}
+	nums[l], nums[t] = nums[t], nums[l]
+	return l
+}
+
+//sentry := rand.Intn(right-left) + left
 func QuickSort(nums []int, first, end int) {
 	if first < end {
 		p := Partition(nums, first, end)
 		QuickSort(nums, 0, p-1)
 		QuickSort(nums, p+1, end)
+	}
+}
+
+func QuickSort2(nums []int, first, end int) {
+	if first < end {
+		p := Partition2(nums, first, end)
+		QuickSort2(nums, 0, p-1)
+		QuickSort2(nums, p+1, end)
 	}
 }
 
