@@ -22,12 +22,12 @@ func killProcess(pid, ppid []int, kill int) []int {
 		fmt.Println()
 	}
 	res := make([]int, 0, len(pid))
-	dfs(kill, m, res)
+	dfs(kill, m, &res)
 	return res
 }
 
-func dfs(root int, m map[int][]int, res []int) {
-	res = append(res, root)
+func dfs(root int, m map[int][]int, res *[]int) {
+	*res = append(*res, root)
 	for i := range m[root] {
 		dfs(m[root][i], m, res)
 	}
@@ -37,7 +37,7 @@ func main() {
 	pid := []int{1, 3, 10, 5}
 	ppid := []int{3, 0, 5, 3}
 
-	res := killProcess(pid, ppid, 3)
+	res := killProcess(pid, ppid, 5)
 	for i := range res {
 		fmt.Print(res[i], " ")
 	}
