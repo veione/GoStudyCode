@@ -12,8 +12,8 @@ const (
 	maxRetryWaitTime   int     = 30 // 最大的重试时间间隔
 	waitTimeBitLen     int     = 20 // 累计等待时间计数占位数
 	waitTimeLimit      int64   = 10 // 等待重试最大超时间隔
-	cfgLoginWindowSize int64   = 100
-	LoginTimeSlice     int64   = 60   // 时间片大小
+	cfgLoginWindowSize int64   = 10
+	LoginTimeSlice     int64   = 5    // 时间片大小
 	EnableLoginQueue   bool    = true //是否使用登录排队功能
 	LoginRetryRatio    float64 = 10   // 登录重试时间系数
 )
