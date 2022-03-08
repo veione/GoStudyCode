@@ -62,7 +62,7 @@ func (lex *lexer) consume(want rune) {
 // - that the input does not contain dotted lists such as (1 2 . 3).
 // - that the input does not contain Lisp reader macros such 'x and #'x.
 //
-// The reflection logic assumes
+// The reflection component assumes
 // - that v is always a variable of the appropriate type for the
 //   S-expression value.  For example, v must not be a boolean,
 //   interface, channel, or function, and if v is an array, the input
