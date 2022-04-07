@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/go-redis/redis"
 	"math"
-	"redisstudy/logicredis"
+	"testpro/redisStudy/logicredis"
 	"time"
 )
 

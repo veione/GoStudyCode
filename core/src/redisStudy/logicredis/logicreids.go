@@ -9,8 +9,10 @@ import (
 var (
 	redisClient *redis.Client
 	once        sync.Once
-	url         = "redis://81.68.166.65:6379"
+	//url         = "redis://81.68.166.65:6379"
 	//url      = "redis://175.97.169.134:6379"
+	url = "redis://:mezy$^28HG@10.1.1.95:6379"
+
 	db       = 2
 	poolSize = 10
 )
