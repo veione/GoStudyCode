@@ -86,42 +86,39 @@ func QuickSort2(nums []int, first, end int) {
 	}
 }
 
-func merge(nums []int, left, mid, right int, temps []int) {
-	i, j, k := left, mid+1, 0
+func merge(nums []int, left, mid, right int) {
+	i, j := left, mid+1
+	temps := make([]int, 0, right-left+1)
 	for i <= mid && j <= right {
 		if nums[i] <= nums[j] {
-			temps[k] = nums[i]
-			k++
+			temps = append(temps, nums[i])
 			i++
 		} else {
-			temps[k] = nums[j]
-			k++
+			temps = append(temps, nums[j])
 			j++
 		}
 	}
 	for i <= mid {
-		temps[k] = nums[i]
+		temps = append(temps, nums[i])
 		i++
-		k++
 	}
 	for j <= right {
-		temps[k] = nums[j]
+		temps = append(temps, nums[j])
 		j++
-		k++
 	}
-	k = 0
+	k := 0
 	for t := left; t <= right; t++ {
 		nums[t] = temps[k]
 		k++
 	}
 }
 
-func MergeSort(nums []int, left, right int, temps []int) {
+func MergeSort(nums []int, left, right int) {
 	if left < right {
 		mid := (right + left) / 2
-		MergeSort(nums, left, mid-1, temps)
-		MergeSort(nums, mid+1, right, temps)
-		merge(nums, left, mid, right, temps)
+		MergeSort(nums, left, mid-1)
+		MergeSort(nums, mid+1, right)
+		merge(nums, left, mid, right)
 	}
 }
 

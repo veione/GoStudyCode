@@ -31,8 +31,7 @@ func TestQuickSort2(t *testing.T) {
 
 func TestMergeSort(t *testing.T) {
 	nums := []int{1, 5, 3, 9, 6}
-	temps := make([]int, len(nums))
-	MergeSort(nums, 0, len(nums)-1, temps)
+	MergeSort(nums, 0, len(nums)-1)
 	for i := range nums {
 		fmt.Printf("%d ", nums[i])
 	}
