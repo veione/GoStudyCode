@@ -7,6 +7,6 @@ type task struct {
 }
 
 func main() {
-	var t = [][]*int 
-	fmt.Printf("%T", tt)
+	var t = [][]*int
+	fmt.Printf("%T", t)
 }
