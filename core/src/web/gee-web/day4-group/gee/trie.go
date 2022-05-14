@@ -3,8 +3,8 @@ package gee
 import "strings"
 
 type node struct {
-	pattern  string  // 待匹配路由，例如 /p/:lang   // 非叶子节点值都是“”, 叶子节点记录了  从根节点到叶子节点的完整路径
-	part     string  // 路由中的一部分，例如 :lang   // 存储当前节点的 单个路径  /wtq/study/math  中的  study。
+	pattern  string  // 待匹配路由，例如 /p/:lang
+	part     string  // 路由中的一部分，例如 :lang
 	children []*node // 子节点，例如 [doc, tutorial, intro]
 	isWild   bool    // 是否精确匹配，part 含有 : 或 * 时为true
 }

@@ -1,7 +1,6 @@
 package gee
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 )
@@ -82,7 +81,6 @@ func (r *router) handle(c *Context) {
 	if n != nil {
 		c.Params = params
 		key := c.Method + "-" + n.pattern
-		fmt.Printf("key:%v   paramsMap: %v \n", key, c.Params)
 		r.handlers[key](c)
 	} else {
 		c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)

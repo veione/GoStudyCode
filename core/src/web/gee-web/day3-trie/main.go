@@ -1,8 +1,8 @@
 package main
 
 import (
-	"gee"
 	"net/http"
+	"testpro/web/gee-web/day3-trie/gee"
 )
 
 func main() {
@@ -23,6 +23,10 @@ func main() {
 
 	r.GET("/assets/*filepath", func(c *gee.Context) {
 		c.JSON(http.StatusOK, gee.H{"filepath": c.Param("filepath")})
+	})
+
+	r.GET("/nihao/wtq/kee/123", func(c *gee.Context) {
+		c.JSON(http.StatusOK, gee.H{"filepath": c.Param("123")})
 	})
 
 	r.Run(":9999")
