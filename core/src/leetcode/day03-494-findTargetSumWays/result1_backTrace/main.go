@@ -9,7 +9,7 @@ func findTargetSumWays(nums []int, target int) int {
 	backtrace = func(index int, sum int) {
 		if index == len(nums) {
 			if sum == target {
-				ans ++
+				ans++
 			}
 			return
 		}
@@ -18,5 +18,15 @@ func findTargetSumWays(nums []int, target int) int {
 	}
 
 	backtrace(0, 0)
+	return ans
+}
+
+func hammingDistance(x int, y int) int {
+	ans := 0
+	for s := x ^ y; s > 0; s >>= 1 {
+		if s&1 == 1 {
+			ans++
+		}
+	}
 	return ans
 }
