@@ -1,7 +1,6 @@
 package gonsq
 
 import (
-	"component/command"
 	"github.com/nsqio/go-nsq"
 )
 
@@ -10,7 +9,7 @@ type MsgHandler func(data []byte)
 
 // GameMessageHandler ...
 type GameMessageHandler struct {
-	handlers map[command.NsqCmd]MsgHandler
+	handlers map[int]MsgHandler
 }
 
 // HandleMessage ...

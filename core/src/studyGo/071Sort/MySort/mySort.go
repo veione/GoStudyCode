@@ -52,15 +52,20 @@ func Partition(nums []int, first, end int) int {
 }
 
 func Partition2(nums []int, left, right int) int {
+	// 左右两个哨兵
 	l, r := left, right
+	// 这里以左边界为基准
 	t := l
 	for l < r {
+		// 从后向前找 第一个比基准值 小的 元素
 		for l < r && nums[r] >= nums[t] {
 			r--
 		}
+		// 从前向后找 第一个比基准值大 的元素
 		for l < r && nums[l] <= nums[t] {
 			l++
 		}
+		// 交换 两个哨兵, 保证
 		if l < r {
 			nums[l], nums[r] = nums[r], nums[l]
 		}

@@ -1,7 +1,6 @@
 package gonsq
 
 import (
-	"component/logger"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -11,6 +10,7 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"testpro/component/logger"
 	"time"
 )
 

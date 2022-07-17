@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	nsqLookup string = "10.1.26.189:4161"
+	nsqLookup string = "10.1.26.150:4161"
 )
 
 func handler(message *nsq.Message) error {
@@ -17,7 +17,7 @@ func handler(message *nsq.Message) error {
 
 func TestProduct(t *testing.T) {
 	Init(nsqLookup, 10)
-	PublishAsync(TestNSQ, "Saber_Test", []byte("tt"), nil)
+	PublishAsync(TestNSQ, "Saber_Test", []byte("wtq"), nil)
 }
 
 func TestConsumer(t *testing.T) {
