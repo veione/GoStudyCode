@@ -15,7 +15,7 @@ func loop(wg *sync.WaitGroup, index int) {
 }
 
 func main() {
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 1; i++ {
 		wg.Add(1)
 		go loop(&wg, i)
 	}

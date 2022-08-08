@@ -8,11 +8,11 @@ func Demo(i int) {
 	//错误拦截要在产?错误前设置
 	defer func() {
 		//设置recover拦截错误信息
-		//err := recover()
+		err := recover()
 		//产?panic异常 打印错误信息
-		//if err != nil {
-		//	fmt.Println(err)
-		//}
+		if err != nil {
+			fmt.Println(err)
+		}
 	}()
 	//根据函数参数为数组元素赋值
 	//如果i的值超过数组下标 会报错误：数组下标越界

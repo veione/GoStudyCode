@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+)
+
 //func letterCombinations(digits string) []string {
 //	numToStr := map[string]string{}
 //	numToStr["2"] = "abc"
@@ -73,4 +77,39 @@ func printLetters(digits string, dMap map[byte]string, dcur int, dmcur int, tmp 
 	}
 	printLetters(digits, dMap, dcur+1, 0, tmp, ans)
 	printLetters(digits, dMap, dcur, dmcur+1, tmp, ans)
+}
+
+func letterCombinations2(digits string) []string {
+	ans := []string{}
+	dMap := map[byte]string{}
+	dMap['2'] = "abc"
+	dMap['3'] = "def"
+	dMap['4'] = "ghi"
+	dMap['5'] = "jkl"
+	dMap['6'] = "mno"
+	dMap['7'] = "pqrs"
+	dMap['8'] = "tuv"
+	dMap['9'] = "wxyz"
+	var dfs func(str string, deep int)
+	dfs = func(str string, deep int) {
+		if deep == len(digits) {
+			ans = append(ans, str)
+			return
+		}
+		for _, char := range dMap[digits[deep]] {
+			str += string(char)
+			dfs(str, deep+1)
+			str = str[:len(str)-1]
+		}
+	}
+	dfs("", 0)
+	return ans
+}
+
+func main() {
+
+	rt := letterCombinations2("22")
+	for _, v := range rt {
+		fmt.Printf("%s ", v)
+	}
 }
